@@ -1,4 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nodeExternals = require('webpack-node-externals');
 
-module.exports = nextConfig
+const nextConfig = {
+    reactStrictMode: true,
+}
+
+module.exports = {
+    ...nextConfig,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.externals = [nodeExternals()];
+    }
+
+    return config;
+  },
+}
